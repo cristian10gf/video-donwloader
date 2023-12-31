@@ -5,17 +5,23 @@ def starDownload():
     try:
         yt_object = YouTube(url.get(), on_progress_callback=on_progress)
         video = yt_object.streams.get_highest_resolution()
-        title.config(text=yt_object.title , text_color="white") 
-        finish_label.config(text="Downloading...", text_color="blue")
+        title.configure(text=yt_object.title , text_color="white", font= ("roboto", 14)) 
+        title.update(pdx=10, pady=10)
+        finish_label.configure(text="Downloading...", text_color="blue")
+        finish_label.update()
         video.download()
-        finish_label.config(text="Download finished", text_color="green")
+        finish_label.configure(text="Download finished", text_color="green")
+        finish_label.update()
+        
     except:
-        finish_label.config(text="Error, try again", text_color="red")
+        finish_label.configure(text="Error, try again", text_color="red")
     
 def on_progress(stream, chunk, bytes_remaining):
     progress_bar = round((1 - bytes_remaining / stream.filesize) * 100)
     progress.set(float(progress_bar / 100))
-    pPercentege.config(text=f"{progress_bar}%", text_color="white")
+    pPercentege.configure(text=f"{progress_bar}%", text_color="white")
+    pPercentege.update()
+    progress.update()
 
 
 # System settings   
@@ -43,7 +49,7 @@ donwload_button.pack(padx=10, pady=12)
 finish_label = ctk.CTkLabel(master=frame_principal, text="", font=("roboto", 14))
 finish_label.pack(padx=10, pady=10)
 
-pPercentege = ctk.CTkLabel(master=frame_principal, text="0%", font=("roboto", 14))
+pPercentege = ctk.CTkLabel(master=frame_principal, text="0%", font=("roboto", 20))
 pPercentege.pack(padx=10, pady=10)
 
 progress = ctk.CTkProgressBar(master=frame_principal, width=400, height=20)
